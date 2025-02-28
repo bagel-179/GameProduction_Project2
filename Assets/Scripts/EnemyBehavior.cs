@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// The in code values and variables
     /// </summary>
-    public bool isStopped;
+    [FormerlySerializedAs("isStopped")] public bool isSeen;
     [SerializeField]
     private bool onCooldown;
     [SerializeField]
@@ -39,24 +40,25 @@ public class Enemy : MonoBehaviour
     {
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
-        if (distance > 0)
-        {
-            Pathfinding();
-        }
+        
 
-        if (isStopped)
+        if (isSeen)
         {
             if (!onCooldown)
             {
                 agent.isStopped = true;
                 StartCoroutine(Cooldown());
                 StartCoroutine(frozen());
-                agent.isStopped = false;
+                StartCoroutine(Pathfinding());
 
             }
             //start a coroutine for how long you will be frozen for
             // iterate on idea to make that time more interactive for the player
             //there also needs to be a lock out/cooldown on this coroutine
+        }
+        else if (distance > 0)
+        {
+            StartCoroutine(Pathfinding());
         }
         
         
@@ -65,7 +67,10 @@ public class Enemy : MonoBehaviour
     public IEnumerator Pathfinding()
     {
         yield return new WaitForSeconds(0.2f);
-        if (!isStopped)
+        for (int i = 0; i < path.corners.Length - 1; i++)
+            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+        Debug.Log("I am Moving");
+        if (!isSeen)
         {
             agent.CalculatePath(player.transform.position, path);
             agent.SetPath(path);
@@ -88,6 +93,7 @@ public class Enemy : MonoBehaviour
         
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
+        isSeen = false;
     }
 
     void Flee(float fleeDistance)
