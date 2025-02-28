@@ -5,28 +5,43 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    /// <summary>
+    /// These are the values that have to be in the inspector
+    /// 1. The player thats currently inside of the scene
+    /// 2. The Navmesh Agent that should be attached to the enemy
+    /// 3. The Meshrenderer that is attached to the eyes, head, and body
+    /// </summary>
+    [SerializeField]
     public GameObject player;   
-    public bool isStopped;
+    [SerializeField]
     private NavMeshAgent agent;
-    private MeshRenderer mesh;
+    [SerializeField]
+    private MeshRenderer[] meshes;
+    private NavMeshPath path;
+    
+    /// <summary>
+    /// The in code values and variables
+    /// </summary>
+    public bool isStopped;
+    [SerializeField]
     private bool onCooldown;
+    [SerializeField]
     private float cooldownTimer = 5f;
+    [SerializeField]
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
+        path = new NavMeshPath();
     }
     void Update()
     {
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
-        if (!isStopped)
+        if (distance > 0)
         {
-            if (distance > 0)
-            {
-                agent.destination = player.transform.position;
-            }
+            Pathfinding();
         }
 
         if (isStopped)
@@ -37,7 +52,6 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(Cooldown());
                 StartCoroutine(frozen());
                 agent.isStopped = false;
-                agent.destination = player.transform.position;
 
             }
             //start a coroutine for how long you will be frozen for
@@ -46,6 +60,16 @@ public class Enemy : MonoBehaviour
         }
         
         
+    }
+
+    public IEnumerator Pathfinding()
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (!isStopped)
+        {
+            agent.CalculatePath(player.transform.position, path);
+            agent.SetPath(path);
+        }
     }
 
     public IEnumerator Cooldown()
@@ -60,8 +84,30 @@ public class Enemy : MonoBehaviour
         float stunTimer = Random.Range(1, 3);
         //changes something about the manniquin
         // change color
+        Invis();
         
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
+    }
+
+    void Flee(float fleeDistance)
+    {
+        if (fleeDistance > 0)
+        {
+            Vector3 temp = player.transform.position - transform.position;
+            Vector3 fleeDirection = transform.position - temp;
+
+            agent.destination = fleeDirection;
+        }
+        
+    }
+
+    void Invis()
+    {
+        foreach (var mesh in meshes)
+        {
+            mesh.enabled = false;
+        }
+        
     }
 }
