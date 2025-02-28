@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public GameObject LoseScreen;
 
 
-     void Start()
+    void Start()
     {
         Win = false;
         Dead = false;
