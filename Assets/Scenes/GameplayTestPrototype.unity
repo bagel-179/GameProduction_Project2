@@ -648,9 +648,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &189822725 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3781394010859121948, guid: c624671d4523c6142bff492b0b0651ba, type: 3}
@@ -662,6 +662,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b843b28da7bcf4cb4ad7e9c8923dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &189822731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189822717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4cdfc743f652af4ba07e520d4da3ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 2
+  MoveSpeed: 5
+  jumpForce: 10
+  fallMultiplier: 2.5
+  ascendMultiplier: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  Win: 0
+  Dead: 0
+  WinScreen: {fileID: 0}
+  LoseScreen: {fileID: 0}
 --- !u!1 &231965230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1669,6 +1693,16 @@ CapsuleCollider:
   m_Height: 2.8073585
   m_Direction: 1
   m_Center: {x: 0, y: 0.031285085, z: -0.046416227}
+--- !u!195 &796729460 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 455144355333166518, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+  m_PrefabInstance: {fileID: 8029541247070661073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &796729462 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4060603161436492140, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+  m_PrefabInstance: {fileID: 8029541247070661073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -4351,12 +4385,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1629330780063441450, guid: c624671d4523c6142bff492b0b0651ba, type: 3}
+    - {fileID: 6053352604601085903, guid: c624671d4523c6142bff492b0b0651ba, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9136729946197364486, guid: c624671d4523c6142bff492b0b0651ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 189822724}
+    - targetCorrespondingSourceObject: {fileID: 9136729946197364486, guid: c624671d4523c6142bff492b0b0651ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 189822731}
     - targetCorrespondingSourceObject: {fileID: 4890086138559902412, guid: c624671d4523c6142bff492b0b0651ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1172619711}
@@ -4373,6 +4411,10 @@ PrefabInstance:
       propertyPath: m_Speed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 455144355333166518, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+      propertyPath: m_AutoBraking
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1659889021193654896, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -4387,7 +4429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2948972078229065302, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.17
+      value: 1.83
       objectReference: {fileID: 0}
     - target: {fileID: 2948972078229065302, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4453,6 +4495,22 @@ PrefabInstance:
       propertyPath: managedReferences[2647943312538075198].GUID.m_Value1
       value: 14155315381698639980
       objectReference: {fileID: 0}
+    - target: {fileID: 8401882140448043385, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 796729460}
+    - target: {fileID: 8401882140448043385, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 189822717}
+    - target: {fileID: 8401882140448043385, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+      propertyPath: mesh.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8401882140448043385, guid: 5e9731ba3540715479970514d697bbf4, type: 3}
+      propertyPath: 'mesh.Array.data[0]'
+      value: 
+      objectReference: {fileID: 796729462}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
