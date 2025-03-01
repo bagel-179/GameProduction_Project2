@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 455144355333166518}
   - component: {fileID: 3740206824194806142}
   - component: {fileID: 8401882140448043385}
+  - component: {fileID: 4514242503877785461}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -171,4 +172,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  isStopped: 0
+  agent: {fileID: 455144355333166518}
+  meshes: []
+  isSeen: 0
+  onCooldown: 0
+  cooldownTimer: 5
+--- !u!136 &4514242503877785461
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659889021193654896}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.95358366
+  m_Height: 2.8073585
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.031285085, z: -0.046416227}

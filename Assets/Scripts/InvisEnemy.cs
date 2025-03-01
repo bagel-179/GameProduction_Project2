@@ -3,9 +3,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
-
-public class Enemy : MonoBehaviour
+public class InvisEnemy : MonoBehaviour
 {
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     /// <summary>
     /// These are the values that have to be in the inspector
     /// 1. The player thats currently inside of the scene
@@ -17,8 +17,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private NavMeshAgent agent;
     [SerializeField]
-    private MeshRenderer[] meshes;
-    private NavMeshPath path;
+    private SkinnedMeshRenderer[] meshes;
+    [SerializeField] 
+    private Transform[] hidingSpots;
     
     /// <summary>
     /// The in code values and variables
@@ -27,19 +28,29 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private bool onCooldown;
     [SerializeField]
-    private float cooldownTimer = 5f;
-    [SerializeField]
+    private float cooldownTimer = 20f;
+    private NavMeshPath path;
+    private Vector3 target;
+    private bool isFrozen;
+    private Plane[] planes;
+    private Collider collider;
+    
+    
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
+        Vector3 target = player.transform.position;
+        planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        collider = GetComponent<Collider>();
+
+
     }
     void Update()
     {
         float distance = Vector3.Distance(player.transform.position, transform.position);
-
         
 
         if (isSeen)
@@ -47,10 +58,9 @@ public class Enemy : MonoBehaviour
             if (!onCooldown)
             {
                 agent.isStopped = true;
-                Debug.Log("I am Stopped");
+                isFrozen = true;
+                StartCoroutine(CameraCheck());
                 StartCoroutine(Cooldown());
-                StartCoroutine(frozen());
-                StartCoroutine(Pathfinding());
 
             }
             //start a coroutine for how long you will be frozen for
@@ -59,22 +69,48 @@ public class Enemy : MonoBehaviour
         }
         else if (distance > 0)
         {
-            StartCoroutine(Pathfinding());
+            StartCoroutine(Pathfinding(target));
         }
         
         
     }
 
-    public IEnumerator Pathfinding()
+    public IEnumerator Pathfinding(Vector3 destination)
     {
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < path.corners.Length - 1; i++)
             Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
         if (!isSeen)
         {
-            agent.CalculatePath(player.transform.position, path);
+            agent.CalculatePath(destination, path);
             agent.SetPath(path);
         }
+    }
+
+    void Hiding()
+    {
+        if(!onCooldown)
+        {
+            Invis(true);
+            float maxTimeHidden = 5f;
+            transform.position = hidingSpots[Random.Range(0, hidingSpots.Length)].position;
+            StartCoroutine(Pathfinding(target));
+            if (Vector3.Distance(transform.position, target) < 4f)
+            {
+                Invis(false);
+            }
+        }
+        
+    }
+
+    IEnumerator CameraCheck()
+    {
+        while (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
+        {
+            yield return null;
+        }
+        
+        Hiding();
     }
     
 
@@ -90,7 +126,6 @@ public class Enemy : MonoBehaviour
         float stunTimer = Random.Range(1, 3);
         //changes something about the manniquin
         // change color
-        Invis();
         
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
@@ -109,11 +144,22 @@ public class Enemy : MonoBehaviour
         
     }
 
-    void Invis()
+    void Invis(bool isInvis)
     {
-        foreach (var mesh in meshes)
+        if (isInvis)
         {
-            mesh.enabled = false;
+            foreach (var mesh in meshes)
+            {
+                mesh.enabled = true;
+            }
+        }
+
+        if (!isInvis)
+        {
+            foreach (var mesh in meshes)
+            {
+                mesh.enabled = false;
+            }
         }
         
     }
