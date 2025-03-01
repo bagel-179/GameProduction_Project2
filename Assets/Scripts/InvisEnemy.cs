@@ -95,7 +95,7 @@ public class InvisEnemy : MonoBehaviour
             float maxTimeHidden = 5f;
             transform.position = hidingSpots[Random.Range(0, hidingSpots.Length)].position;
             StartCoroutine(Pathfinding(target));
-            if (Vector3.Distance(transform.position, target) < 4f)
+            if (Vector3.Distance(transform.position, target) < 2f)
             {
                 Invis(false);
             }
@@ -105,12 +105,18 @@ public class InvisEnemy : MonoBehaviour
 
     IEnumerator CameraCheck()
     {
-        while (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
+        bool inVision;
+        if (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
         {
-            yield return null;
+            inVision = true;
         }
-        
-        Hiding();
+        else
+        {
+            inVision = false;
+            Hiding();
+        }
+
+        yield return null;
     }
     
 
