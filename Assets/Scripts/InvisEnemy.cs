@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -25,15 +24,15 @@ public class InvisEnemy : MonoBehaviour
     /// The in code values and variables
     /// </summary>
     [FormerlySerializedAs("isStopped")] public bool isSeen;
-    [SerializeField]
-    private bool onCooldown;
-    [SerializeField]
-    private float cooldownTimer = 20f;
+    [FormerlySerializedAs("onCooldown")] [SerializeField]
+    private bool canHide;
     private NavMeshPath path;
     private Vector3 target;
-    private bool isFrozen;
+    private bool isInCamera;
     private Plane[] planes;
     private Collider collider;
+    private bool isFrozen;
+    private bool freezeCooldown;
     
     
 
@@ -42,10 +41,9 @@ public class InvisEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
-        Vector3 target = player.transform.position;
         planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         collider = GetComponent<Collider>();
-
+        canHide = true;
 
     }
     void Update()
@@ -55,21 +53,55 @@ public class InvisEnemy : MonoBehaviour
 
         if (isSeen)
         {
-            if (!onCooldown)
+            
+            switch (canHide)
             {
-                agent.isStopped = true;
-                isFrozen = true;
-                StartCoroutine(CameraCheck());
-                StartCoroutine(Cooldown());
-
+                // you caught the enemy but he can't hide right now
+                case true:
+                    StartCoroutine(frozen());
+                    break;
+                // caught the enemy and it can hide
+                case false:
+                    if (!isFrozen && !freezeCooldown)
+                    {
+                        StartCoroutine(frozen());
+                        StartCoroutine(FreezeCooldown(6f));
+                        StartCoroutine(Pathfinding(player.transform.position));
+                    }
+                    break;
+                    
             }
-            //start a coroutine for how long you will be frozen for
-            // iterate on idea to make that time more interactive for the player
-            //there also needs to be a lock out/cooldown on this coroutine
         }
-        else if (distance > 0)
+        if (distance > 0 && !isFrozen)
         {
-            StartCoroutine(Pathfinding(target));
+            StartCoroutine(Pathfinding(player.transform.position));
+        }
+        
+
+        
+        
+        
+    }
+
+    public IEnumerator CameraCheck()
+    {
+        if (canHide)
+        {
+            int temp = 0;
+            while (temp == 0)
+            {
+                if (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
+                {
+                    Debug.Log("Your still staring at me!! I cant hide");
+                }
+
+                if (!GeometryUtility.TestPlanesAABB(planes, collider.bounds))
+                {
+                    temp = 1;
+                    Hiding();
+                }
+            }
+            yield return null;
         }
         
         
@@ -89,65 +121,43 @@ public class InvisEnemy : MonoBehaviour
 
     void Hiding()
     {
-        if(!onCooldown)
+        if(canHide)
         {
+            isSeen = false;
+            agent.isStopped = false;
             Invis(true);
-            float maxTimeHidden = 5f;
             transform.position = hidingSpots[Random.Range(0, hidingSpots.Length)].position;
-            StartCoroutine(Pathfinding(target));
+            StartCoroutine(Pathfinding(player.transform.position));
             if (Vector3.Distance(transform.position, target) < 2f)
             {
                 Invis(false);
+                StartCoroutine(FreezeCooldown(9f));
             }
         }
         
     }
-
-    IEnumerator CameraCheck()
-    {
-        bool inVision;
-        if (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
-        {
-            inVision = true;
-        }
-        else
-        {
-            inVision = false;
-            Hiding();
-        }
-
-        yield return null;
-    }
     
 
-    public IEnumerator Cooldown()
+    public IEnumerator FreezeCooldown(float duration)
     {
-        onCooldown = true;
-        yield return new WaitForSeconds(cooldownTimer);
-        onCooldown = false;
+        yield return new WaitForSeconds(duration);
+        isFrozen = false;
     }
 
     public IEnumerator frozen()
     {
-        float stunTimer = Random.Range(1, 3);
-        //changes something about the manniquin
-        // change color
-        
+        isFrozen = true;
+        agent.isStopped = true;
+        float stunTimer = Random.Range(2, 4);
+        if (canHide)
+        {
+            StartCoroutine(CameraCheck());
+        }
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
         isSeen = false;
-    }
-
-    void Flee(float fleeDistance)
-    {
-        if (fleeDistance > 0)
-        {
-            Vector3 temp = player.transform.position - transform.position;
-            Vector3 fleeDirection = transform.position - temp;
-
-            agent.destination = fleeDirection;
-        }
-        
+        isFrozen = false;
+        freezeCooldown = true;
     }
 
     void Invis(bool isInvis)

@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_Name
-      value: Monster_rigged
+      value: Invis Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+      propertyPath: m_TagString
+      value: Invis Monster
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.812
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -17.18
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52,8 +56,68 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5925316705049872872, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1210988519484468217}
   m_SourcePrefab: {fileID: 100100000, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+--- !u!137 &2205661444489358392 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 106032301580516678, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+  m_PrefabInstance: {fileID: 2298145005312430462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3672080312439270466 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3247516592369155388, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+  m_PrefabInstance: {fileID: 2298145005312430462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4837233947221633746 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6685004384371702700, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+  m_PrefabInstance: {fileID: 2298145005312430462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &5410559087625378540 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 6121109214033103762, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+  m_PrefabInstance: {fileID: 2298145005312430462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6781089852440648364 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4755770419360254930, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+  m_PrefabInstance: {fileID: 2298145005312430462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9153430242669906577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
+  m_PrefabInstance: {fileID: 2298145005312430462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1210988519484468217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153430242669906577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b157e71de93e8c441a27b2f380a8b854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  agent: {fileID: 5410559087625378540}
+  meshes:
+  - {fileID: 6781089852440648364}
+  - {fileID: 4837233947221633746}
+  - {fileID: 2205661444489358392}
+  - {fileID: 3672080312439270466}
+  hidingSpots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isSeen: 0
+  canHide: 0
+  cooldownTimer: 20
