@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -19,6 +20,7 @@ public class InvisEnemy : MonoBehaviour
     private SkinnedMeshRenderer[] meshes;
     [SerializeField] 
     private Transform[] hidingSpots;
+    public float safezone = 3f;
     
     /// <summary>
     /// The in code values and variables
@@ -44,35 +46,37 @@ public class InvisEnemy : MonoBehaviour
         planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         collider = GetComponent<Collider>();
         canHide = true;
+        isFrozen = false;
+        freezeCooldown = false;
+
 
     }
     void Update()
     {
+        isSeen = false;
         float distance = Vector3.Distance(player.transform.position, transform.position);
         
 
         if (isSeen)
         {
-            
-            switch (canHide)
+            if (distance < safezone)
             {
-                // you caught the enemy but he can't hide right now
-                case true:
+                if (!freezeCooldown)
+                {
+                    StartCoroutine(FreezeCooldown(6f));
                     StartCoroutine(frozen());
-                    break;
-                // caught the enemy and it can hide
-                case false:
-                    if (!isFrozen && !freezeCooldown)
-                    {
-                        StartCoroutine(frozen());
-                        StartCoroutine(FreezeCooldown(6f));
-                        StartCoroutine(Pathfinding(player.transform.position));
-                    }
-                    break;
-                    
+                    StartCoroutine(Pathfinding(player.transform.position));
+                }
             }
+
+            if (canHide)
+            {
+                Hiding();
+            }
+            
+            
         }
-        if (distance > 0 && !isFrozen)
+        else if (distance > 0)
         {
             StartCoroutine(Pathfinding(player.transform.position));
         }
@@ -82,30 +86,7 @@ public class InvisEnemy : MonoBehaviour
         
         
     }
-
-    public IEnumerator CameraCheck()
-    {
-        if (canHide)
-        {
-            int temp = 0;
-            while (temp == 0)
-            {
-                if (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
-                {
-                    Debug.Log("Your still staring at me!! I cant hide");
-                }
-
-                if (!GeometryUtility.TestPlanesAABB(planes, collider.bounds))
-                {
-                    temp = 1;
-                    Hiding();
-                }
-            }
-            yield return null;
-        }
-        
-        
-    }
+    
 
     public IEnumerator Pathfinding(Vector3 destination)
     {
@@ -149,10 +130,6 @@ public class InvisEnemy : MonoBehaviour
         isFrozen = true;
         agent.isStopped = true;
         float stunTimer = Random.Range(2, 4);
-        if (canHide)
-        {
-            StartCoroutine(CameraCheck());
-        }
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
         isSeen = false;
@@ -179,4 +156,6 @@ public class InvisEnemy : MonoBehaviour
         }
         
     }
+    
+    
 }
