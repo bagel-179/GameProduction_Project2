@@ -11,7 +11,7 @@ public class PlayerActions : MonoBehaviour
     private float MaxUseDistance = 5f;
     [SerializeField]
     private LayerMask UseLayers;
-
+    /*
     public void OnUse()
     {
         if (Physics.Raycast(Camera.position, Camera.forward, out RaycastHit hit, MaxUseDistance, UseLayers))
@@ -51,5 +51,5 @@ public class PlayerActions : MonoBehaviour
         {
             UseText.gameObject.SetActive(false);
         }
-    }
+    } */
 }
