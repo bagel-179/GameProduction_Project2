@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.Serialization;
 public class InvisEnemy : MonoBehaviour
 {
@@ -30,13 +31,12 @@ public class InvisEnemy : MonoBehaviour
     private bool canHide;
     private NavMeshPath path;
     private Vector3 target;
-    private bool isInCamera;
+    private bool isHiding;
     private Plane[] planes;
     private Collider collider;
-    private bool isFrozen;
-    private bool freezeCooldown;
-    
-    
+    private bool isLooking;
+    [SerializeField] private bool onCooldown;
+
 
     void Start()
     {
@@ -46,113 +46,118 @@ public class InvisEnemy : MonoBehaviour
         planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         collider = GetComponent<Collider>();
         canHide = true;
-        isFrozen = false;
-        freezeCooldown = false;
+        
 
 
     }
     void Update()
     {
-        isSeen = false;
+        
         float distance = Vector3.Distance(player.transform.position, transform.position);
         
-
+        
         if (isSeen)
         {
-            if (distance < safezone)
+            if (!isHiding)
             {
-                if (!freezeCooldown)
-                {
-                    StartCoroutine(FreezeCooldown(6f));
-                    StartCoroutine(frozen());
-                    StartCoroutine(Pathfinding(player.transform.position));
-                }
+                agent.isStopped = true;
+                isLooking = true;
+                StartCoroutine(LookingAway());
             }
-
-            if (canHide)
-            {
-                Hiding();
-            }
-            
             
         }
-        else if (distance > 0)
+        else if (!isSeen && distance > 0)
         {
+            agent.isStopped = false;
             StartCoroutine(Pathfinding(player.transform.position));
         }
+
+        if (isHiding)
+        {
+            if (distance <= safezone)
+            {
+                Invis(false);
+                StartCoroutine(HideCooldown());
+                isHiding = false;
+            }
+        }
         
 
         
         
+        isSeen = false;
+    }
+
+    public IEnumerator LookingAway()
+    {
+        if (isLooking)
+        {
+            var timer = 10f;
+            timer -= Time.timeScale;
+            while (timer > 0)
+            {
+                if (!isSeen && canHide)
+                {
+                    Hiding();
+                   
+                }
+
+                yield return null;
+            }
+            
+        }
         
+        isLooking = false;
+        
+    }
+    public IEnumerator HideCooldown()
+    {
+        canHide = false;
+        yield return new WaitForSeconds(9f);
+        canHide = true;
     }
     
 
     public IEnumerator Pathfinding(Vector3 destination)
     {
         yield return new WaitForSeconds(0.2f);
-        for (int i = 0; i < path.corners.Length - 1; i++)
-            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+        
         if (!isSeen)
         {
             agent.CalculatePath(destination, path);
             agent.SetPath(path);
         }
+        for (int i = 0; i < path.corners.Length - 1; i++)
+            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
     }
 
     void Hiding()
     {
-        if(canHide)
+        if(canHide && !isHiding)
         {
+            Debug.Log("I'm being triggered");
+            canHide = false;
             isSeen = false;
             agent.isStopped = false;
+            isHiding = true;
+
+            Debug.Log("Cloaking");
             Invis(true);
             transform.position = hidingSpots[Random.Range(0, hidingSpots.Length)].position;
             StartCoroutine(Pathfinding(player.transform.position));
-            if (Vector3.Distance(transform.position, target) < 2f)
-            {
-                Invis(false);
-                StartCoroutine(FreezeCooldown(9f));
-            }
+            canHide = false;
+
+
         }
         
     }
     
 
-    public IEnumerator FreezeCooldown(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        isFrozen = false;
-    }
-
-    public IEnumerator frozen()
-    {
-        isFrozen = true;
-        agent.isStopped = true;
-        float stunTimer = Random.Range(2, 4);
-        yield return new WaitForSeconds(stunTimer);
-        agent.isStopped = false;
-        isSeen = false;
-        isFrozen = false;
-        freezeCooldown = true;
-    }
-
     void Invis(bool isInvis)
     {
-        if (isInvis)
+        foreach (var mesh in meshes)
         {
-            foreach (var mesh in meshes)
-            {
-                mesh.enabled = true;
-            }
-        }
-
-        if (!isInvis)
-        {
-            foreach (var mesh in meshes)
-            {
-                mesh.enabled = false;
-            }
+            mesh.enabled = !isInvis;
         }
         
     }

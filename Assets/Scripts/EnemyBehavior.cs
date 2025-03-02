@@ -27,8 +27,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private bool onCooldown;
     [SerializeField]
-    private float cooldownTimer = 5f;
+    private float cooldownTimer = 6f;
     [SerializeField]
+    public float safezone = 3f;
 
     void Start()
     {
@@ -44,14 +45,16 @@ public class Enemy : MonoBehaviour
 
         if (isSeen)
         {
-            if (!onCooldown)
+            if (distance <= safezone)
             {
-                agent.isStopped = true;
-                Debug.Log("I am Stopped");
-                StartCoroutine(Cooldown());
-                StartCoroutine(frozen());
-                StartCoroutine(Pathfinding());
+                if (!onCooldown)
+                {
+                    Debug.Log("I am Stopped");
+                    StartCoroutine(Cooldown());
+                    StartCoroutine(frozen());
+                    StartCoroutine(Pathfinding());
 
+                }
             }
             //start a coroutine for how long you will be frozen for
             // iterate on idea to make that time more interactive for the player
@@ -87,11 +90,8 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator frozen()
     {
+        agent.isStopped = true;
         float stunTimer = Random.Range(1, 3);
-        //changes something about the manniquin
-        // change color
-        Invis();
-        
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
         isSeen = false;
@@ -108,13 +108,5 @@ public class Enemy : MonoBehaviour
         }
         
     }
-
-    void Invis()
-    {
-        foreach (var mesh in meshes)
-        {
-            mesh.enabled = false;
-        }
-        
-    }
+    
 }
