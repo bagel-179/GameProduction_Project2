@@ -33,7 +33,7 @@ public class FOV : MonoBehaviour
                         isSpotted = true;
                         var script = enemy.GetComponent<Enemy>();
 
-                        script.isSeen = true;
+                        script.isStopped = true;
 
                     }
                     if (enemy.CompareTag("Invis Monster"))

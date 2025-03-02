@@ -167,9 +167,5 @@ public class Player : MonoBehaviour
             // Rising: Change multiplier to make player reach peak of jump faster
             rb.linearVelocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
         }
-        else if(rb.linearVelocity.y == 0)
-        {
-            isGrounded = true;
-        }
     }
 }
