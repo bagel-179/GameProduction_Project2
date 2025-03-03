@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerJumping : MonoBehaviour
 {
     [SerializeField] float jumpSpeed = 5f;
+    [SerializeField] float jumpPressBufferTime = .05f;
 
     //jumpAction = playerInput.actions["jump"];
     //InputAction jumpAction;
@@ -12,6 +13,7 @@ public class PlayerJumping : MonoBehaviour
     Player player;
 
     bool tryingToJump;
+    float lastJumpPressTime;
 
     void Awake()
     {
@@ -31,15 +33,17 @@ public class PlayerJumping : MonoBehaviour
 
     void OnJump()
     {
-        if (player.IsGrounded)
-        {
-            player.velocity.y += jumpSpeed;
-        }
+        tryingToJump = true;
+        lastJumpPressTime = Time.time;
     }
 
     void OnBeforeMove()
     {
-        if (tryingToJump && player.IsGrounded)
+        bool wasTryingToJump = Time.time - lastJumpPressTime < jumpPressBufferTime;
+
+        bool isOrWasTryingToJump = tryingToJump || wasTryingToJump;
+
+        if (isOrWasTryingToJump && player.IsGrounded)
         {
             player.velocity.y += jumpSpeed;
         }

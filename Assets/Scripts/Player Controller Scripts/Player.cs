@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float mass = 1f;
     [SerializeField] float acceleration = 20f;
-    [SerializeField] Transform cameraTransform;
+    public Transform cameraTransform;
     private float verticalRotation = 0f;
 
     public bool IsGrounded => controller.isGrounded;
@@ -53,15 +53,25 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //UpdateGround();
         UpdateGravity();
         UpdateMovement();
         UpdateLook();
     }
 
+    /*void UpdateGround()
+    {
+        if (wasGrounded != IsGrounded)
+        {
+            OnGroundStateChange?.Invoke(IsGrounded);
+            wasGrounded = IsGrounded;
+        }
+    }*/
+
     void UpdateGravity()
     {
         var gravity = Physics.gravity * mass * Time.deltaTime;
-        velocity.y = controller.isGrounded ? -1f : velocity.y + gravity.y;
+        velocity.y = IsGrounded ? -1f : velocity.y + gravity.y;
     }
 
     Vector3 GetMovementInput()
@@ -94,27 +104,16 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
     }
-
-    void RotateCamera()
-    {
-        float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
-        transform.Rotate(0, horizontalRotation, 0);
-
-        verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -89f, 89f);
-
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-    }
     
     void UpdateLook()
     {
-        float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
+        /*float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
         transform.Rotate(0, horizontalRotation, 0);
 
         verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -89f, 89f);
 
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);*/
 
 
         var lookInput = lookAction.ReadValue<Vector2>();

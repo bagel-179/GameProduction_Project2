@@ -7,12 +7,18 @@ using UnityEngine.InputSystem;
 public class Crouch : MonoBehaviour
 {
     [SerializeField] float crouchHeight = 1f;
+    [SerializeField] float crouchTransitionSpeed = 10f;
+    [SerializeField] float crouchSpeedMultiplier = .5f;
 
     Player player;
     PlayerInput playerInput;
     InputAction crouchAction;
 
+    Vector3 initialCameraPosition;
+    float currentHeight;
     float standingHeight;
+
+    bool IsCrouching => standingHeight - currentHeight > .1f;
 
     void Awake()
     {
@@ -24,7 +30,8 @@ public class Crouch : MonoBehaviour
 
     void Start()
     {
-        standingHeight = player.Height;
+        initialCameraPosition = player.cameraTransform.localPosition;
+        standingHeight = currentHeight = player.Height;
     }
 
     void OnEnable() => player.OnBeforeMove += OnBeforeMove;
@@ -36,6 +43,37 @@ public class Crouch : MonoBehaviour
 
         var heightTarget = isTryingToCrouch ? crouchHeight : standingHeight;
 
-        player.Height = heightTarget;
+        if (IsCrouching && !isTryingToCrouch)
+        {
+            var castOrigin = transform.position + new Vector3(0, currentHeight / 2, 0);
+            if (Physics.Raycast(castOrigin, Vector3.up, out RaycastHit hit, 0.2f))
+            {
+                var distanceToCeiling = hit.point.y - castOrigin.y;
+                heightTarget = Mathf.Max
+                (
+                    currentHeight + distanceToCeiling - 0.1f,
+                    crouchHeight
+                );
+            }
+        }
+
+        if (!Mathf.Approximately(heightTarget, currentHeight))
+        {
+            var crouchDelta = Time.deltaTime * crouchTransitionSpeed; //make the crouch transition smooth
+            currentHeight = Mathf.Lerp(currentHeight, heightTarget, crouchDelta);
+
+            var halfHeightDifference = new Vector3(0, (standingHeight - heightTarget) / 2, 0);
+            var newCameraPosition = initialCameraPosition - halfHeightDifference;
+
+            player.cameraTransform.localPosition = newCameraPosition;
+            player.Height = currentHeight;
+        }
+
+        if (IsCrouching)
+        {
+            player.movementSpeedMultiplier *= crouchSpeedMultiplier;
+        }
+    
     }
+
 }
