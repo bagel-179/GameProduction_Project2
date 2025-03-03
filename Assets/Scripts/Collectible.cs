@@ -5,6 +5,8 @@ public class Collectible : MonoBehaviour
 {
     public static event Action OnCollected;
     public static int total;
+    int keys;
+    public GameObject WinTrigger;
 
     void Awake() => total++;
 
@@ -17,6 +19,11 @@ public class Collectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            keys++;
+            if (keys == 2)
+            {
+                WinTrigger.SetActive(true);
+            }
             OnCollected?.Invoke();
             Destroy(gameObject);
         }

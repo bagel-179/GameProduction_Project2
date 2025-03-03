@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
 
     internal float movementSpeedMultiplier;
 
+    int keys;
+
+    public GameObject WinTrigger;
 
     public float Height
     {
@@ -51,12 +54,24 @@ public class Player : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            keys++;
+        }
+    }
     void Update()
     {
         //UpdateGround();
         UpdateGravity();
         UpdateMovement();
         UpdateLook();
+        
+        if (keys == 2)
+        {
+            WinTrigger.SetActive(true);
+        }
     }
 
     /*void UpdateGround()

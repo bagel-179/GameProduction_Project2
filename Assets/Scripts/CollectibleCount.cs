@@ -5,6 +5,7 @@ public class CollectibleCount : MonoBehaviour
 
     TMPro.TMP_Text text;
     int count;
+    public GameObject WinTrigger;
 
     void Awake()
     {
@@ -25,6 +26,14 @@ public class CollectibleCount : MonoBehaviour
     void UpdateCount()
     {
         text.text = $"{count} / {Collectible.total}";
+    }
+
+    private void Update()
+    {
+        if (count == 2)
+        {
+            WinTrigger.SetActive(true);
+        }
     }
 
 }
