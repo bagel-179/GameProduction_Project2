@@ -1,10 +1,10 @@
-using TMPro;
+//using TMPro;
 using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshPro UseText;
+    //[SerializeField]
+    //private TextMeshPro UseText;
     [SerializeField]
     private Transform Camera;
     [SerializeField]

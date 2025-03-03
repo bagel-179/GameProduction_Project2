@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerBehaviorMain : MonoBehaviour
 {
     // Camera Rotation
     public float mouseSensitivity = 2f;

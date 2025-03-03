@@ -1,13 +1,28 @@
+using System;
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerBehavior2 : MonoBehaviour
+public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] float mouseSensitivity = 3f;
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float mass = 1f;
+    [SerializeField] float acceleration = 20f;
     [SerializeField] Transform cameraTransform;
+
+    public event Action OnBeforeMove;
+
+    internal float movementSpeedMultiplier;
+
+    public bool IsGrounded => controller.isGrounded;
+
+    public float Height
+    {
+        get => controller.height;
+        set => controller.height = value;
+    }
 
     CharacterController controller;
     Vector3 velocity;
@@ -17,6 +32,7 @@ public class PlayerBehavior2 : MonoBehaviour
     InputAction moveAction;
     InputAction lookAction;
     InputAction jumpAction;
+    InputAction sprintAction;
 
     void Awake()
     {
@@ -25,6 +41,7 @@ public class PlayerBehavior2 : MonoBehaviour
         moveAction = playerInput.actions["move"];
         lookAction = playerInput.actions["look"];
         jumpAction = playerInput.actions["jump"];
+        sprintAction = playerInput.actions["sprint"];
     }
 
     
@@ -47,18 +64,32 @@ public class PlayerBehavior2 : MonoBehaviour
         velocity.y = controller.isGrounded ? -1f : velocity.y + gravity.y;
     }
 
-    void UpdateMovement()
+    Vector3 GetMovementInput()
     {
-        //var x = Input.GetAxisRaw("Horizontal");
-        //var y = Input.GetAxisRaw("Vertical");
-        //Debug.Log(x);
-        //Debug.Log(y);
         var moveInput = moveAction.ReadValue<Vector2>();
-
         var input = new Vector3();
+
         input += transform.forward * moveInput.y;
         input += transform.right * moveInput.x;
         input = Vector3.Normalize(input); //makes it so you dont move faster diagonally than horizontally
+
+        //var sprintInput = sprintAction.ReadValue<float>();
+        //var multiplier = sprintInput > 0 ? 1.5f : 1f;
+
+        input *= movementSpeed * movementSpeedMultiplier;
+        return input;
+    }
+
+    void UpdateMovement()
+    {
+        movementSpeedMultiplier = 1f;
+        OnBeforeMove?.Invoke();
+
+        var input = GetMovementInput();
+
+        var factor = acceleration * Time.deltaTime; //velocity gradually increases and decreases when 'w' is pressed and unpressed
+        velocity.x = Mathf.Lerp(velocity.x, input.x, factor);
+        velocity.z = Mathf.Lerp(velocity.z, input.z, factor);
 
         var jumpInput = jumpAction.ReadValue<float>();
         if (jumpInput > 0 && controller.isGrounded)
@@ -66,7 +97,7 @@ public class PlayerBehavior2 : MonoBehaviour
             velocity.y += jumpSpeed;
         }
         
-        controller.Move((input * movementSpeed + velocity) * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);
 
     }
 
