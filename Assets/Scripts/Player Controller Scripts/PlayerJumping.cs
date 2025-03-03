@@ -31,7 +31,10 @@ public class PlayerJumping : MonoBehaviour
 
     void OnJump()
     {
-        tryingToJump = true;
+        if (player.IsGrounded)
+        {
+            player.velocity.y += jumpSpeed;
+        }
     }
 
     void OnBeforeMove()
