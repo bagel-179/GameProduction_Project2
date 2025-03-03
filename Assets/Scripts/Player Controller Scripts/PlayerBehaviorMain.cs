@@ -61,6 +61,15 @@ public class PlayerBehaviorMain : MonoBehaviour
             Time.timeScale = 0;
             return;
         }
+        else if (other.gameObject.tag == "Invis Monster")
+        {
+            Dead = true;
+            MoveSpeed = 0f;
+            jumpForce = 0f;
+            mouseSensitivity = 0f;
+            return;
+
+        }
         else if (other.gameObject.tag == "Enemy")
         {
             Dead = true;
@@ -68,7 +77,9 @@ public class PlayerBehaviorMain : MonoBehaviour
             jumpForce = 0f;
             mouseSensitivity = 0f;
             return;
+
         }
+
     }
 
     void Update()
@@ -166,6 +177,10 @@ public class PlayerBehaviorMain : MonoBehaviour
         {
             // Rising: Change multiplier to make player reach peak of jump faster
             rb.linearVelocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
+        }
+        else if (rb.linearVelocity.y == 0)
+        {
+            isGrounded = true;
         }
     }
 }
