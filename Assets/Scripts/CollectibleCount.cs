@@ -25,7 +25,7 @@ public class CollectibleCount : MonoBehaviour
 
     void UpdateCount()
     {
-        text.text = $"{count} / {Collectible.total}";
+        text.text = $"{count} / {2}";
     }
 
     private void Update()
