@@ -5532,9 +5532,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1202820572180807817, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2375872
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202820572180807817, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2375872
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202820572180807817, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2375872
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202820572180807817, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202820572180807817, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -215.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2506140862913200325, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2665615952859926736, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_text
+      value: Anna Grant - Project Lead, Programmer, Level Designer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2665615952859926736, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_margin.z
+      value: -24.887589
       objectReference: {fileID: 0}
     - target: {fileID: 2673327559958065193, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: MasterMixer
@@ -5542,7 +5570,43 @@ PrefabInstance:
       objectReference: {fileID: 24100000, guid: 4a68c37fd8871804ab177e6634aa6bff, type: 2}
     - target: {fileID: 3541964686288041640, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899623986468368183, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1581961
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899623986468368183, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1581961
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899623986468368183, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1581961
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899623986468368183, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -33.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899623986468368183, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -107.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3953298093668399615, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -48.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3953298093668399615, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -73.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4550207581650886464, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 433
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912126333047014475, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_text
+      value: Nicholas Lorenzo - Programmer
       objectReference: {fileID: 0}
     - target: {fileID: 6215067348671724506, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_Name
@@ -5550,23 +5614,79 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6383191481817849862, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6383191481817849862, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890882355237102131, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0980321
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890882355237102131, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0980321
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890882355237102131, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0980321
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890882355237102131, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890882355237102131, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082016414324853007, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_text
+      value: Christian Mangels - Ast. Lead, UI/Lighting artist, Voice Actor
       objectReference: {fileID: 0}
     - target: {fileID: 7190729252829855078, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7190729252829855078, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7190729252829855078, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492350767028061740, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2482597
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492350767028061740, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2482597
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492350767028061740, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2482597
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492350767028061740, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -178.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158773769069763476, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1591256
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158773769069763476, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1591256
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158773769069763476, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1591256
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158773769069763476, guid: 272d829d5456bd349b72c74c28cf8cd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -141.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

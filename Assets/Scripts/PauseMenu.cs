@@ -3,14 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
-    public GameObject PauseMenu;
+    [SerializeField] GameObject pauseMenu;
     public static bool isPaused;
+
     void Start()
     {
-        PauseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -24,28 +25,31 @@ public class PauseMenuScript : MonoBehaviour
                 PauseGame();
             }
         }
+
     }
     public void PauseGame() 
     {
-        PauseMenu.SetActive(true);
+        pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
     }
+
     public void ResumeGame() 
     {
-        PauseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }
 
     public void GoToMainMenu()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1f;
     }
+
     public void Restart()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene("Level 1");
+        Time.timeScale = 1f;
     }
 }

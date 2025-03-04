@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float mass = 1f;
     [SerializeField] float acceleration = 20f;
     public Transform cameraTransform;
-    private float verticalRotation = 0f;
+    //private float verticalRotation = 0f;
 
     public bool IsGrounded => controller.isGrounded;
 
