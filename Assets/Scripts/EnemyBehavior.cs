@@ -30,9 +30,11 @@ public class Enemy : MonoBehaviour
     private float cooldownTimer = 6f;
     [SerializeField]
     public float safezone = 3f;
+    public Animator anim;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour
             {
                 if (!onCooldown)
                 {
+
                     Debug.Log("I am Stopped");
                     StartCoroutine(Cooldown());
                     StartCoroutine(frozen());
@@ -91,11 +94,13 @@ public class Enemy : MonoBehaviour
     public IEnumerator frozen()
     {
         agent.isStopped = true;
+        anim.enabled = false;
         agent.ResetPath();
         float stunTimer = Random.Range(1, 3);
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;
         isSeen = false;
+        anim.enabled = true;
     }
 
     void Flee(float fleeDistance)
