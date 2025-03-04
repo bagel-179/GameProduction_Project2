@@ -2,6 +2,7 @@ using System;
 using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -61,20 +62,15 @@ public class Player : MonoBehaviour
         {
             keys++;
         }
-
-        if (other.CompareTag("Door"))
-        {
-
-        }
         
         if (other.CompareTag("Enemy"))
         {
-
+            SceneManager.LoadScene("Death Scene");
         }
 
         if(other.CompareTag("Invis Monster"))
         {
-
+            SceneManager.LoadScene("Death Scene");
         }
     }
 
