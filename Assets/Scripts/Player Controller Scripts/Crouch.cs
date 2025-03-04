@@ -45,7 +45,8 @@ public class Crouch : MonoBehaviour
 
         if (IsCrouching && !isTryingToCrouch)
         {
-            var castOrigin = transform.position + new Vector3(0, currentHeight / 2, 0);
+            var castOrigin = transform.position + new Vector3(0, currentHeight / 2, 0); //raycasting to check when the player hieght
+                                                                                        //is in relation to the ceiling/object above them
             if (Physics.Raycast(castOrigin, Vector3.up, out RaycastHit hit, 0.2f))
             {
                 var distanceToCeiling = hit.point.y - castOrigin.y;
