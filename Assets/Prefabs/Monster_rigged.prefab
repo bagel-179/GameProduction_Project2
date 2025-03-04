@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 04162f08a3fc2d047b6d063dd8b456f0, type: 2}
     - target: {fileID: 5866666021909216657, guid: d72caf6f8fdd27c4dbb1b30bc8dc1ed7, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6240733294840144465, guid: d72caf6f8fdd27c4dbb1b30bc8dc1ed7, type: 3}
       propertyPath: m_Layer
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  agent: {fileID: 0}
+  agent: {fileID: 6121109214033103762}
   meshes:
   - {fileID: 0}
   - {fileID: 0}
@@ -434,3 +434,4 @@ MonoBehaviour:
   isSeen: 0
   onCooldown: 0
   cooldownTimer: 5
+  safezone: 3

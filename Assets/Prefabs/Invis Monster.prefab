@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.42
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.y
@@ -118,6 +118,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  safezone: 3
   isSeen: 0
   canHide: 0
-  cooldownTimer: 20
+  onCooldown: 0
