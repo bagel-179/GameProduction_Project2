@@ -76,6 +76,7 @@ public class Player : MonoBehaviour
 
         }
     }
+
     void Update()
     {
         //UpdateGround();
@@ -149,7 +150,7 @@ public class Player : MonoBehaviour
         var lookInput = lookAction.ReadValue<Vector2>();
         look.x += lookInput.x * mouseSensitivity;
         look.y += lookInput.y * mouseSensitivity;
-        Debug.Log(look);
+        //Debug.Log(look);
 
         look.y = Mathf.Clamp(look.y, -89f, 89f); //make it so player can't look 360 degrees
 
