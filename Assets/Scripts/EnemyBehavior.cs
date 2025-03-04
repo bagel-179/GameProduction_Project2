@@ -64,8 +64,8 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(Pathfinding());
         }
-        
-        
+
+        isSeen = false;
     }
 
     public IEnumerator Pathfinding()
@@ -91,6 +91,7 @@ public class Enemy : MonoBehaviour
     public IEnumerator frozen()
     {
         agent.isStopped = true;
+        agent.ResetPath();
         float stunTimer = Random.Range(1, 3);
         yield return new WaitForSeconds(stunTimer);
         agent.isStopped = false;

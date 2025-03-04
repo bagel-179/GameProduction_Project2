@@ -8,34 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4190783765064118883, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_Height
-      value: 2.053677
-      objectReference: {fileID: 0}
-    - target: {fileID: 4190783765064118883, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_Radius
-      value: 0.7390299
-      objectReference: {fileID: 0}
-    - target: {fileID: 4190783765064118883, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_Center.x
-      value: -0.011503816
-      objectReference: {fileID: 0}
-    - target: {fileID: 4190783765064118883, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_Center.y
-      value: 1.0268385
-      objectReference: {fileID: 0}
-    - target: {fileID: 4190783765064118883, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_Center.z
-      value: 0.04424286
-      objectReference: {fileID: 0}
-    - target: {fileID: 4190783765064118883, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4416024092593462063, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_Name
       value: Invis Monster
@@ -46,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.42
       objectReference: {fileID: 0}
     - target: {fileID: 7757716815163441493, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       propertyPath: m_LocalPosition.y
@@ -92,9 +64,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1210988519484468217}
-    - targetCorrespondingSourceObject: {fileID: 6981462312030051311, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5154743787165483951}
   m_SourcePrefab: {fileID: 100100000, guid: b2f6bacfe213f78478e738d66ec3b766, type: 3}
 --- !u!137 &2205661444489358392 stripped
 SkinnedMeshRenderer:
@@ -153,26 +122,3 @@ MonoBehaviour:
   isSeen: 0
   canHide: 0
   onCooldown: 0
---- !u!136 &5154743787165483951
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9153430242669906577}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0583463
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.0165789, z: 0}
