@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     //private float verticalRotation = 0f;
 
     public bool IsGrounded => controller.isGrounded;
+    public bool isPaused = false;
 
     public event Action OnBeforeMove;
 
