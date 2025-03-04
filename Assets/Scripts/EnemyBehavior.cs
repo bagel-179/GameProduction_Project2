@@ -47,9 +47,9 @@ public class Enemy : MonoBehaviour
 
         if (isSeen)
         {
-            if (distance <= safezone)
+            if (!onCooldown)
             {
-                if (!onCooldown)
+                if (distance <= safezone)
                 {
 
                     Debug.Log("I am Stopped");
@@ -58,6 +58,10 @@ public class Enemy : MonoBehaviour
                     StartCoroutine(Pathfinding());
 
                 }
+            }
+            else
+            {
+                StartCoroutine(Pathfinding());
             }
             //start a coroutine for how long you will be frozen for
             // iterate on idea to make that time more interactive for the player
