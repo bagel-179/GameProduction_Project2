@@ -11,7 +11,7 @@ public class PlayerTriggers : MonoBehaviour
     {
         if(transform.position.y < -10.0f)
         {
-            winLooseScript.LooseLevel();
+
         }
     }
 }
