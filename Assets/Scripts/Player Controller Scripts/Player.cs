@@ -60,6 +60,21 @@ public class Player : MonoBehaviour
         {
             keys++;
         }
+
+        if (other.CompareTag("Door"))
+        {
+
+        }
+        
+        if (other.CompareTag("Enemy"))
+        {
+
+        }
+
+        if(other.CompareTag("Invis Monster"))
+        {
+
+        }
     }
     void Update()
     {
