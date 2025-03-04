@@ -2,38 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Required for UI buttons
+using UnityEngine.UI;
 
 public class PauseMenus : MonoBehaviour
 {
-    public GameObject pauseMenu;  // Pause Menu UI
-    public Button resumeButton;   // Resume Button (Assign in Inspector)
+    public GameObject pauseMenu;
+    public Button resumeButton;
 
     public static bool isPaused = false;
     public Player PlayerScript;
 
     void Start()
     {
-        // Ensure pause menu starts hidden
         pauseMenu.SetActive(false);
         isPaused = false;
         PlayerScript.isPaused = false;
 
-        // Manually assign Resume button function
-        if (resumeButton != null)
+        /*if (resumeButton != null)
         {
-            resumeButton.onClick.RemoveAllListeners(); // Clear previous listeners
-            resumeButton.onClick.AddListener(TogglePause); // Calls Pause/Resume like the 'P' key
+            resumeButton.onClick.RemoveAllListeners();
+            resumeButton.onClick.AddListener(TogglePause);
         }
         else
         {
             Debug.LogError("Resume button is NOT assigned in the Inspector!");
-        }
+        }*/
     }
 
     void Update()
     {
-        // Press 'P' to toggle pause state
         if (Input.GetKeyDown(KeyCode.P))
         {
             TogglePause();
@@ -72,6 +69,12 @@ public class PauseMenus : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Level 1");
+        Time.timeScale = 1f;
     }
 
     public void MainMenu()
