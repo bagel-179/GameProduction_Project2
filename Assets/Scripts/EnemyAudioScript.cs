@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EnemyAudioScript : MonoBehaviour
 {
@@ -7,18 +10,34 @@ public class EnemyAudioScript : MonoBehaviour
     public float Volume;
     AudioSource audio;
     public bool alreadyPlayed = false;
+    Collider Collider;
 
     private void Start()
     {
         audio = GetComponent<AudioSource>();
+        Collider = gameObject.GetComponent<Collider>();
     }
 
-    private void OnTriggerEnter()
+    IEnumerator Respawn (Collider collision, int time)
+    {
+        audio.PlayOneShot(SoundToPlay, Volume);
+        alreadyPlayed = true;
+        collision.gameObject.SetActive(!true);
+        yield return new WaitForSeconds(time);
+        collision.gameObject.SetActive(true);
+    }
+
+    private void OnTriggerEnter(Collider collision)
     {
         if (!alreadyPlayed)
         {
-            audio.PlayOneShot(SoundToPlay, Volume);
-            alreadyPlayed = true;
+            StartCoroutine(Respawn(collision, 6));
+            //yield return new WaitForSeconds(9f);
         }
+        else
+        {
+            
+        }
+        
     }
 }
