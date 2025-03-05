@@ -9,34 +9,31 @@ public class EnemyAudioScript : MonoBehaviour
     public AudioClip SoundToPlay;
     public float Volume;
     AudioSource audio;
-    public bool alreadyPlayed = false;
+    public bool alreadyPlayed;
     Collider Collider;
 
     private void Start()
     {
         audio = GetComponent<AudioSource>();
         Collider = gameObject.GetComponent<Collider>();
+        alreadyPlayed = false;
     }
 
     IEnumerator Respawn (Collider collision, int time)
     {
         audio.PlayOneShot(SoundToPlay, Volume);
         alreadyPlayed = true;
-        collision.gameObject.SetActive(!true);
+        collision.enabled = false;
         yield return new WaitForSeconds(time);
-        collision.gameObject.SetActive(true);
+        collision.enabled = true;
+        alreadyPlayed = false;
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         if (!alreadyPlayed)
         {
-            StartCoroutine(Respawn(collision, 6));
-            //yield return new WaitForSeconds(9f);
-        }
-        else
-        {
-            
+            StartCoroutine(Respawn(Collider, 6));
         }
         
     }
