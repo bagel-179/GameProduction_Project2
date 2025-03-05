@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     public float safezone = 3f;
     public Animator anim;
+    [SerializeField]
+    private bool isFrozen;
 
     void Start()
     {
@@ -38,6 +40,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
+        
     }
     void Update()
     {
@@ -55,19 +58,17 @@ public class Enemy : MonoBehaviour
                     Debug.Log("I am Stopped");
                     StartCoroutine(Cooldown());
                     StartCoroutine(frozen());
-                    StartCoroutine(Pathfinding());
+                    //StartCoroutine(Pathfinding());
 
                 }
+                else if(!isFrozen)
+                {
+                    StartCoroutine(Pathfinding());
+                }
             }
-            else
-            {
-                StartCoroutine(Pathfinding());
-            }
-            //start a coroutine for how long you will be frozen for
-            // iterate on idea to make that time more interactive for the player
-            //there also needs to be a lock out/cooldown on this coroutine
+           
         }
-        else if (distance > 0)
+        else if (distance > 0 && !isFrozen)
         {
             StartCoroutine(Pathfinding());
         }
@@ -99,12 +100,14 @@ public class Enemy : MonoBehaviour
     {
         agent.isStopped = true;
         anim.enabled = false;
-        agent.ResetPath();
+        isFrozen = true;
         float stunTimer = Random.Range(1, 3);
         yield return new WaitForSeconds(stunTimer);
+        isFrozen = false;
+        anim.enabled = true;
         agent.isStopped = false;
         isSeen = false;
-        anim.enabled = true;
+        
     }
 
     void Flee(float fleeDistance)

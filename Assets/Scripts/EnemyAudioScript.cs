@@ -1,24 +1,40 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EnemyAudioScript : MonoBehaviour
 {
     public AudioClip SoundToPlay;
     public float Volume;
     AudioSource audio;
-    public bool alreadyPlayed = false;
+    public bool alreadyPlayed;
+    Collider Collider;
 
     private void Start()
     {
         audio = GetComponent<AudioSource>();
+        Collider = gameObject.GetComponent<Collider>();
+        alreadyPlayed = false;
     }
 
-    private void OnTriggerEnter()
+    IEnumerator Respawn (Collider collision, int time)
+    {
+        audio.PlayOneShot(SoundToPlay, Volume);
+        alreadyPlayed = true;
+        collision.enabled = false;
+        yield return new WaitForSeconds(time);
+        collision.enabled = true;
+        alreadyPlayed = false;
+    }
+
+    private void OnTriggerEnter(Collider collision)
     {
         if (!alreadyPlayed)
         {
-            audio.PlayOneShot(SoundToPlay, Volume);
-            alreadyPlayed = true;
+            StartCoroutine(Respawn(Collider, 6));
         }
+        
     }
 }
